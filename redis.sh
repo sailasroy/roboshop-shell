@@ -35,13 +35,18 @@ VALIDATE $? "Enabling Redis 6.2"
 yum install redis -y  &>>$LOGFILE
 VALIDATE $? "Installing Redis"
 
-#sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf &>>$LOGFILE
-##sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf &>>$LOGFILE
-
-VALIDATE $? "Changing the address in redis.conf"
-
 systemctl enable redis &>>$LOGFILE
 VALIDATE $? "Enabling Redis"
 
 systemctl start redis &>>$LOGFILE
 VALIDATE $? "Start Redis"
+
+
+#sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf &>>$LOGFILE
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf &>>$LOGFILE
+
+VALIDATE $? "Changing the address in redis.conf"
+systemctl restart redis &>>$LOGFILE
+VALIDATE $? "REStart Redis"
+
+
