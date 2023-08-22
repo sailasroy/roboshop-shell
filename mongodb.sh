@@ -8,7 +8,7 @@ DATE=$(date +%F)
     N="\e[0m"
 
 USERID=$(id -u)
-if [ $? -ne 0 ]
+if [ $USERID -ne 0 ]
 then
 echo "ERROR:: Please sign in with root access"
 exit 1
