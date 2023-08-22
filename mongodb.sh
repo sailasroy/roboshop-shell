@@ -21,7 +21,7 @@ echo -e "$2 ........$R FAILURE $N"
 exit 1
 else 
 echo -e "$2............$G SUCCESS $N"
-}
+fi
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo &<<$LOGFILE
 VALIDATE $? "mongo.repo copied to yum.repos.d"
