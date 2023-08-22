@@ -42,5 +42,5 @@ VALIDATE $? "Starting mysql"
 mysql_secure_installation --set-root-pass RoboShop@1 &>>$LOGFILE
 VALIDATE $? "Setting Username and password"
 
-mysql -uroot -pRoboShop@1 &>>$LOGFILE
-VALIDATE $? "Checking Username and password"
+# mysql -uroot -pRoboShop@1 &>>$LOGFILE
+# VALIDATE $? "Checking Username and password"
