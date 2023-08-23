@@ -1,10 +1,10 @@
 [Unit]
-Description = User Service
+Description = Cart Service
 [Service]
-cart=roboshop
-Environment=MONGO=true
+User=roboshop
 Environment=REDIS_HOST=redis.sailasdevops.online
-Environment=MONGO_URL="mongodb://mongodb.sailasdevops.online:27017/carts"
+Environment=CATALOGUE_HOST=catalogue.sailasdevops.online
+Environment=CATALOGUE_PORT=8080
 ExecStart=/bin/node /app/server.js
 SyslogIdentifier=cart
 

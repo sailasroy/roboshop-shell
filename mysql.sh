@@ -7,8 +7,8 @@ DATE=$(date +%F)
     G="\e[32m"
     N="\e[0m"
 
-USERID=$(id -u)
-if [ $USERID -ne 0 ]
+cartID=$(id -u)
+if [ $cartID -ne 0 ]
 then
 echo -e "$R ERROR:: Please sign in with root access $N"
 exit 1
@@ -40,7 +40,7 @@ systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "Starting mysql"
 
 mysql_secure_installation --set-root-pass RoboShop@1 &>>$LOGFILE
-VALIDATE $? "Setting Username and password"
+VALIDATE $? "Setting cartname and password"
 
 # mysql -uroot -pRoboShop@1 &>>$LOGFILE
-# VALIDATE $? "Checking Username and password"
+# VALIDATE $? "Checking cartname and password"

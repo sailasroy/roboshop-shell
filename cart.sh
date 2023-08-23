@@ -6,8 +6,8 @@ DATE=$(date +%F)
     G="\e[32m"
     N="\e[0m"
 
-USERID=$(id -u)
-if [ $USERID -ne 0 ]
+cartID=$(id -u)
+if [ $cartID -ne 0 ]
 then
 echo -e "$R ERROR:: Please sign in with root access $N"
 exit 1
@@ -27,18 +27,18 @@ curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>$LOGFILE
     VALIDATE $? "Dowloading nodejs source file"
 yum install nodejs -y &>>$LOGFILE
     VALIDATE $? "Installing nodejs"  
-catalogueadd roboshop
+cartadd roboshop
 
 mkdir /app
 
-curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>>$LOGFILE
-    VALIDATE $? "Downloading the catalogue artifact"
+curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>>$LOGFILE
+    VALIDATE $? "Downloading the cart artifact"
 
 cd /app &>>$LOGFILE
     VALIDATE $? "Opening app directory"
 
-unzip /tmp/catalogue.zip &>>$LOGFILE
-    VALIDATE $? "Unzipping catalogue artifact"
+unzip /tmp/cart.zip &>>$LOGFILE
+    VALIDATE $? "Unzipping cart artifact"
 
 cd /app &>>$LOGFILE
     VALIDATE $? "Opening app directory"
@@ -46,17 +46,17 @@ cd /app &>>$LOGFILE
 npm install &>>$LOGFILE
     VALIDATE $? "Installing nodejs dependencies"
 
-cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service &>>$LOGFILE
-    VALIDATE $? "Copying catalogue.service"
+cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service &>>$LOGFILE
+    VALIDATE $? "Copying cart.service"
 
 systemctl daemon-reload &>>$LOGFILE
-    VALIDATE $? "Reloading catalogue.service"
+    VALIDATE $? "Reloading cart.service"
 
-systemctl enable catalogue &>>$LOGFILE
-    VALIDATE $? "Enabling catalogue.service"
+systemctl enable cart &>>$LOGFILE
+    VALIDATE $? "Enabling cart.service"
 
-systemctl start catalogue &>>$LOGFILE
-    VALIDATE $? "Starting catalogue.service"
+systemctl start cart &>>$LOGFILE
+    VALIDATE $? "Starting cart.service"
 
 cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGFILE
     VALIDATE $? "Copying mongo.repo"
@@ -64,5 +64,5 @@ cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGFIL
 yum install mongodb-org-shell -y &>>$LOGFILE
     VALIDATE $? "Installing mongodb client"
 
-mongo --host mongodb.sailasdevops.online </app/schema/catalogue.js &>>$LOGFILE
-    VALIDATE $? "Uploading catalogue products through mongodb"
+mongo --host mongodb.sailasdevops.online </app/schema/cart.js &>>$LOGFILE
+    VALIDATE $? "Uploading cart products through mongodb"

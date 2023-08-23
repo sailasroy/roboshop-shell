@@ -7,8 +7,8 @@ DATE=$(date +%F)
     G="\e[32m"
     N="\e[0m"
 
-USERID=$(id -u)
-if [ $USERID -ne 0 ]
+cartID=$(id -u)
+if [ $cartID -ne 0 ]
 then
 echo -e "$R ERROR:: Please sign in with root access $N"
 exit 1
@@ -33,6 +33,7 @@ VALIDATE $? "enabling mongod"
 systemctl start mongod &>>$LOGFILE
 VALIDATE $? "mongodb starting"
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>>$LOGFILE
+
 VALIDATE $? "changing mongod.conf address"
 systemctl restart mongod &>>$LOGFILE
 VALIDATE $? "restarting mongodb"
