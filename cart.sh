@@ -1,3 +1,4 @@
+#!/bin/bash
 DATE=$(date +%F)
     SCRIPT_NAME=$0
     LOGFILE=/tmp/$SCRIPT_NAME-$DATE.log
@@ -6,8 +7,8 @@ DATE=$(date +%F)
     G="\e[32m"
     N="\e[0m"
 
-cartID=$(id -u)
-if [ $cartID -ne 0 ]
+USERID=$(id -u)
+if [ $USERID -ne 0 ]
 then
 echo -e "$R ERROR:: Please sign in with root access $N"
 exit 1
@@ -27,7 +28,7 @@ curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>$LOGFILE
     VALIDATE $? "Dowloading nodejs source file"
 yum install nodejs -y &>>$LOGFILE
     VALIDATE $? "Installing nodejs"  
-cartadd roboshop
+useradd roboshop
 
 mkdir /app
 
@@ -64,5 +65,5 @@ cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGFIL
 yum install mongodb-org-shell -y &>>$LOGFILE
     VALIDATE $? "Installing mongodb client"
 
-mongo --host mongodb.sailasdevops.online </app/schema/cart.js &>>$LOGFILE
-    VALIDATE $? "Uploading cart products through mongodb"
+# mongo --host mongodb.sailasdevops.online </app/schema/cart.js &>>$LOGFILE
+#     VALIDATE $? "Uploading cart products through mongodb"
