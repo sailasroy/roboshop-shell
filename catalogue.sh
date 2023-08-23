@@ -1,6 +1,7 @@
 DATE=$(date +%F)
     SCRIPT_NAME=$0
     LOGFILE=/tmp/$SCRIPT_NAME-$DATE.log
+    https://github.com/sailasroy/roboshop-shell.git=/tmp/$SCRIPT_NAME-$DATE.log
     R="\e[31m"
     G="\e[32m"
     N="\e[0m"
@@ -22,46 +23,46 @@ echo -e "$2............$G SUCCESS $N"
 fi
 }
 
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>$LOGFILE
     VALIDATE $? "Dowloading nodejs source file"
-yum install nodejs -y
-    VALIDATE $? "Installing nodejs"
+yum install nodejs -y &>>$LOGFILE
+    VALIDATE $? "Installing nodejs"  
 useradd roboshop
 
 mkdir /app
 
-curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
+curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>>$LOGFILE
     VALIDATE $? "Downloading the catalogue artifact"
 
-cd /app 
+cd /app &>>$LOGFILE
     VALIDATE $? "Opening app directory"
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>>$LOGFILE
     VALIDATE $? "Unzipping catalogue artifact"
 
-cd /app
+cd /app &>>$LOGFILE
     VALIDATE $? "Opening app directory"
 
-npm install 
+npm install &>>$LOGFILE
     VALIDATE $? "Installing nodejs dependencies"
 
-cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service
+cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service &>>$LOGFILE
     VALIDATE "Copying catalogue.service"
 
-systemctl daemon-reload
+systemctl daemon-reload &>>$LOGFILE
     VALIDATE $? "Reloading catalogue.service"
 
-systemctl enable catalogue
+systemctl enable catalogue &>>$LOGFILE
     VALIDATE $? "Enabling catalogue.service"
 
-systemctl start catalogue
+systemctl start catalogue &>>$LOGFILE
     VALIDATE $? "Starting catalogue.service"
 
 cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGFILE
     VALIDATE $? "Copying mongo.repo"
 
-yum install mongodb-org-shell -y
+yum install mongodb-org-shell -y &>>$LOGFILE
     VALIDATE $? "Installing mongodb client"
 
-mongo --host mongodb.sailasdevops.online </app/schema/catalogue.js
+mongo --host mongodb.sailasdevops.online </app/schema/catalogue.js &>>$LOGFILE
     VALIDATE $? "Uploading catalogue products through mongodb"
