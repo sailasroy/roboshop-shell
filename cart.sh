@@ -41,13 +41,13 @@ cd /app &>>$LOGFILE
 unzip /tmp/cart.zip &>>$LOGFILE
     VALIDATE $? "Unzipping cart artifact"
 
-cd /app &>>$LOGFILE
+cd /app 
     VALIDATE $? "Opening app directory"
 
-npm install &>>$LOGFILE
+npm install 
     VALIDATE $? "Installing nodejs dependencies"
 
-cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service &>>$LOGFILE
+cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service
     VALIDATE $? "Copying cart.service"
 
 systemctl daemon-reload &>>$LOGFILE
