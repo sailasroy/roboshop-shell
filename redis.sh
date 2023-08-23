@@ -46,10 +46,11 @@ VALIDATE $? "Start Redis"
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf &>>$LOGFILE
 VALIDATE $? "Changing the address in redis.conf"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf &>>$LOGFILE
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf /etc/redis.conf /etc/redis/redis.conf &>>$LOGFILE
 
 
 VALIDATE $? "Changing the address in redis.conf"
+
 systemctl restart redis &>>$LOGFILE
 VALIDATE $? "REStart Redis"
 
