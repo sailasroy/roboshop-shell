@@ -47,7 +47,7 @@ npm install &>>$LOGFILE
     VALIDATE $? "Installing nodejs dependencies"
 
 cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service &>>$LOGFILE
-    VALIDATE "Copying catalogue.service"
+    VALIDATE $? "Copying catalogue.service"
 
 systemctl daemon-reload &>>$LOGFILE
     VALIDATE $? "Reloading catalogue.service"
