@@ -7,6 +7,8 @@ DATE=$(date +%F)
     G="\e[32m"
     N="\e[0m"
 
+    USERNAME=$(id)
+
 USERID=$(id -u)
 if [ $USERID -ne 0 ]
 then
@@ -24,45 +26,49 @@ echo -e "$2............$G SUCCESS $N"
 fi
 }
 
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash 
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>$LOGFILE
     VALIDATE $? "Dowloading nodejs source file"
-yum install nodejs -y 
+yum install nodejs -y &>>$LOGFILE
     VALIDATE $? "Installing nodejs"  
 useradd roboshop
+if [ id -ne 0] 
+else
+echo ""
+fi
 
 mkdir /app
 
-curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip 
+curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>>$LOGFILE
     VALIDATE $? "Downloading the cart artifact"
 
-cd /app 
+cd /app &>>$LOGFILE
     VALIDATE $? "Opening app directory"
 
-unzip /tmp/cart.zip 
+unzip /tmp/cart.zip &>>$LOGFILE
     VALIDATE $? "Unzipping cart artifact"
 
-cd /app 
+cd /app &>>$LOGFILE
     VALIDATE $? "Opening app directory"
 
-npm install 
+npm install &>>$LOGFILE
     VALIDATE $? "Installing nodejs dependencies"
 
-cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service
+cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service &>>$LOGFILE
     VALIDATE $? "Copying cart.service"
 
-systemctl daemon-reload 
+systemctl daemon-reload &>>$LOGFILE
     VALIDATE $? "Reloading cart.service"
 
-systemctl enable cart 
+systemctl enable cart &>>$LOGFILE
     VALIDATE $? "Enabling cart.service"
 
-systemctl start cart 
+systemctl start cart &>>$LOGFILE
     VALIDATE $? "Starting cart.service"
 
-cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo 
+cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGFILE
     VALIDATE $? "Copying mongo.repo"
 
-yum install mongodb-org-shell -y 
+yum install mongodb-org-shell -y &>>$LOGFILE
     VALIDATE $? "Installing mongodb client"
 
 # mongo --host mongodb.sailasdevops.online </app/schema/cart.js &>>$LOGFILE
