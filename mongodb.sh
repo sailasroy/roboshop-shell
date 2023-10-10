@@ -1,11 +1,11 @@
 #!/bin/bash
 
 DATE=$(date +%F)
-    SCRIPT_NAME=$0
-    LOGFILE=/tmp/$SCRIPT_NAME-$DATE.log
-    R="\e[31m"
-    G="\e[32m"
-    N="\e[0m"
+SCRIPT_NAME=$0
+LOGFILE=/tmp/$SCRIPT_NAME-$DATE.log
+R="\e[31m"
+G="\e[32m"
+N="\e[0m"
 
 cartID=$(id -u)
 if [ $cartID -ne 0 ]
